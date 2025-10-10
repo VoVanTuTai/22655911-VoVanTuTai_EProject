@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  # === 1. API GATEWAY ===
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+    depends_on:
+      # Sửa điều kiện phụ thuộc thành 'service_started' (chỉ cần bắt đầu là đủ)
+      auth: { condition: service_started }
+      product: { condition: service_started }
+      order: { condition: service_started }
+    networks:
+      - microservice-net
+
+  # === 2. AUTH SERVICE ===
+  auth:
+    build: ./auth
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://auth-db:27017/auth_db
+    depends_on:
+      auth-db: { condition: service_started }
+    networks:
+      - microservice-net
+
+  # === 3. PRODUCT SERVICE ===
+  product:
+    build: ./product
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URI=mongodb://product-db:27017/product_db
+      - RABBITMQ_URI=amqp://rabbitmq
+    depends_on:
+      product-db: { condition: service_started }
+      # GIỮ LẠI điều kiện 'service_healthy' cho RabbitMQ vì Product Service RẤT cần RabbitMQ sẵn sàng.
+      rabbitmq: { condition: service_healthy } 
+    networks:
+      - microservice-net
+
+  # === 4. ORDER SERVICE ===
+  order:
+    build: ./order
+    ports:
+      - "3002:3002"
+    environment:
+      - MONGO_URI=mongodb://order-db:27017/order_db
+      - RABBITMQ_URI=amqp://rabbitmq
+    depends_on:
+      order-db: { condition: service_started }
+      # GIỮ LẠI điều kiện 'service_healthy' cho RabbitMQ vì Order Service RẤT cần RabbitMQ sẵn sàng.
+      rabbitmq: { condition: service_healthy } 
+    networks:
+      - microservice-net
+
+  # === 5. RABBITMQ (Đã thêm HEALTHCHECK) ===
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck: # ĐỊNH NGHĨA HEALTHCHECK CHO RABBITMQ
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_listener"]
+      interval: 5s
+      timeout: 2s
+      retries: 20 # Thử lại 20 lần (tổng cộng khoảng 100 giây)
+    networks:
+      - microservice-net
+
+  # === 6. DATABASES ===
+  auth-db:
+    image: mongo:latest
+    container_name: auth-db
+    ports:
+      - "27018:27017"
+    volumes:
+      - auth-db-data:/data/db
+    networks:
+      - microservice-net
+
+  product-db:
+    image: mongo:latest
+    container_name: product-db
+    ports:
+      - "27019:27017"
+    volumes:
+      - product-db-data:/data/db
+    networks:
+      - microservice-net
+
+  order-db:
+    image: mongo:latest
+    container_name: order-db
+    ports:
+      - "27020:27017"
+    volumes:
+      - order-db-data:/data/db
+    networks:
+      - microservice-net
+
+volumes:
+  auth-db-data:
+  product-db-data:
+  order-db-data:
+
+networks:
+  microservice-net:
+    driver: bridge
