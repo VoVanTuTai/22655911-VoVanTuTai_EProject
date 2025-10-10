@@ -8,8 +8,8 @@ services:
       - "3003:3003"
     environment:
       - PORT=3003
+    # API Gateway chỉ cần các service BẮT ĐẦU (started)
     depends_on:
-      # Sửa điều kiện phụ thuộc thành 'service_started' (chỉ cần bắt đầu là đủ)
       auth: { condition: service_started }
       product: { condition: service_started }
       order: { condition: service_started }
@@ -38,8 +38,8 @@ services:
       - RABBITMQ_URI=amqp://rabbitmq
     depends_on:
       product-db: { condition: service_started }
-      # GIỮ LẠI điều kiện 'service_healthy' cho RabbitMQ vì Product Service RẤT cần RabbitMQ sẵn sàng.
-      rabbitmq: { condition: service_healthy } 
+      # NỚI LỎNG: Chỉ cần RabbitMQ BẮT ĐẦU là Product Service sẽ tự cố gắng kết nối
+      rabbitmq: { condition: service_started } 
     networks:
       - microservice-net
 
@@ -53,23 +53,24 @@ services:
       - RABBITMQ_URI=amqp://rabbitmq
     depends_on:
       order-db: { condition: service_started }
-      # GIỮ LẠI điều kiện 'service_healthy' cho RabbitMQ vì Order Service RẤT cần RabbitMQ sẵn sàng.
-      rabbitmq: { condition: service_healthy } 
+      # NỚI LỎNG: Chỉ cần RabbitMQ BẮT ĐẦU là Order Service sẽ tự cố gắng kết nối
+      rabbitmq: { condition: service_started } 
     networks:
       - microservice-net
 
-  # === 5. RABBITMQ (Đã thêm HEALTHCHECK) ===
+  # === 5. RABBITMQ ===
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
-    healthcheck: # ĐỊNH NGHĨA HEALTHCHECK CHO RABBITMQ
+    # GIỮ LẠI HEALTHCHECK để theo dõi, nhưng không dùng làm điều kiện phụ thuộc cứng
+    healthcheck: 
       test: ["CMD", "rabbitmq-diagnostics", "check_port_listener"]
       interval: 5s
       timeout: 2s
-      retries: 20 # Thử lại 20 lần (tổng cộng khoảng 100 giây)
+      retries: 20
     networks:
       - microservice-net
 
