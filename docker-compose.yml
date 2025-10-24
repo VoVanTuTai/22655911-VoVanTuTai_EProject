@@ -4,57 +4,58 @@ services:
   # === 1. API GATEWAY ===
   api-gateway:
     build: ./api-gateway
+    container_name: api-gateway
     ports:
       - "3003:3003"
     environment:
       - PORT=3003
-    # API Gateway chỉ cần các service BẮT ĐẦU (started)
     depends_on:
-      auth: { condition: service_started }
-      product: { condition: service_started }
-      order: { condition: service_started }
+      - auth
+      - product
+      - order
     networks:
       - microservice-net
 
   # === 2. AUTH SERVICE ===
   auth:
     build: ./auth
+    container_name: auth
     ports:
       - "3000:3000"
     environment:
       - MONGO_URI=mongodb://auth-db:27017/auth_db
     depends_on:
-      auth-db: { condition: service_started }
+      - auth-db
     networks:
       - microservice-net
 
   # === 3. PRODUCT SERVICE ===
   product:
     build: ./product
+    container_name: product
     ports:
       - "3001:3001"
     environment:
       - MONGO_URI=mongodb://product-db:27017/product_db
-      - RABBITMQ_URI=amqp://rabbitmq
+      - RABBITMQ_URI=amqp://rabbitmq:5672
     depends_on:
-      product-db: { condition: service_started }
-      # NỚI LỎNG: Chỉ cần RabbitMQ BẮT ĐẦU là Product Service sẽ tự cố gắng kết nối
-      rabbitmq: { condition: service_started } 
+      - product-db
+      - rabbitmq
     networks:
       - microservice-net
 
   # === 4. ORDER SERVICE ===
   order:
     build: ./order
+    container_name: order
     ports:
       - "3002:3002"
     environment:
       - MONGO_URI=mongodb://order-db:27017/order_db
-      - RABBITMQ_URI=amqp://rabbitmq
+      - RABBITMQ_URI=amqp://rabbitmq:5672
     depends_on:
-      order-db: { condition: service_started }
-      # NỚI LỎNG: Chỉ cần RabbitMQ BẮT ĐẦU là Order Service sẽ tự cố gắng kết nối
-      rabbitmq: { condition: service_started } 
+      - order-db
+      - rabbitmq
     networks:
       - microservice-net
 
@@ -65,46 +66,53 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    # GIỮ LẠI HEALTHCHECK để theo dõi, nhưng không dùng làm điều kiện phụ thuộc cứng
-    healthcheck: 
+    healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "check_port_listener"]
       interval: 5s
       timeout: 2s
       retries: 20
+    restart: always
     networks:
       - microservice-net
 
-  # === 6. DATABASES ===
+  # === 6. MONGODB DATABASES ===
   auth-db:
-    image: mongo:latest
+    image: mongo:6
     container_name: auth-db
     ports:
       - "27018:27017"
     volumes:
       - auth-db-data:/data/db
+    command: ["mongod", "--bind_ip_all"]
+    restart: always
     networks:
       - microservice-net
 
   product-db:
-    image: mongo:latest
+    image: mongo:6
     container_name: product-db
     ports:
       - "27019:27017"
     volumes:
       - product-db-data:/data/db
+    command: ["mongod", "--bind_ip_all"]
+    restart: always
     networks:
       - microservice-net
 
   order-db:
-    image: mongo:latest
+    image: mongo:6
     container_name: order-db
     ports:
       - "27020:27017"
     volumes:
       - order-db-data:/data/db
+    command: ["mongod", "--bind_ip_all"]
+    restart: always
     networks:
       - microservice-net
 
+# === 7. VOLUMES & NETWORKS ===
 volumes:
   auth-db-data:
   product-db-data:

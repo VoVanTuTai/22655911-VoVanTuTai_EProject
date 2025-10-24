@@ -110,22 +110,12 @@ class ProductController {
     }
   }
 
-  //lấy id sản phẩm
-  async getProductById(req, res, next) {
+  async getProductById(req, res) {
     try {
-      const token = req.headers.authorization;
-      if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-      const { id } = req.params;
-      const product = await Product.findById(id);
-      if (!product) {
-        return res.status(404).json({ message: "Product not found" });
-      }
-      res.status(200).json(product);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Server error" });
+      const p = await Product.findById(req.params.id);
+      return p ? res.json(p) : res.sendStatus(404);
+    } catch {
+      res.sendStatus(500);
     }
   }
 }
