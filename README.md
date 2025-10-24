@@ -10,11 +10,12 @@
 <img width="960" height="540" alt="Get Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/getproduct.png" />
 <img width="960" height="540" alt="Post Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/postproduct.png" />
 <img width="960" height="540" alt="Post Product Error" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/postproducterror.png" />
-
+<!-- Order -->
+<img width="960" height="540" alt="Get Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/order.png" />
 <!-- Kết quả từ Mongo -->
-<img width="960" height="540" alt="Kiểm tra Mongo Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/mongoproduct.png" />
 <img width="960" height="540" alt="Kiểm tra Mongo khi post thành công" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/taikhoantrongmongo.png" />
-
+<img width="960" height="540" alt="Kiểm tra Mongo Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/mongoproduct.png" />
+<img width="960" height="540" alt="Kiểm tra Mongo Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/mongoorder.png" />
 <!-- Docker kiểm tra -->
 <img width="960" height="540" alt="Docker check" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/checkdocker.png" />
 <img width="960" height="540" alt="Docker thư mục" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/docker00.png" />
