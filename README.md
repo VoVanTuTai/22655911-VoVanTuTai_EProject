@@ -1,22 +1,37 @@
-<!-- Đăng ký -->
-<img width="960" height="540" alt="Đăng ký thành công" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/dangkythanhcong.png" />
-<img width="960" height="540" alt="Đăng ký không thành công" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/dangkykhongthanhcong.png" />
+Data in MongoCompass
+Hiển thị bằng cách ánh xạ cổng từ docker ra ngoài
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4910f24a-830b-4f60-b032-466dad471bb7" />
+Đăng ký thành công
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/77e226ad-c1cd-4d59-ade7-0c70ef1a705e" />
+Đăng ký trùng
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a755bfcb-03a7-492b-a6eb-9c04852e983e" />
+Đăng ký thiếu thông tin
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/34755a1a-51cd-4c28-a197-8a67e3c7396b" />
+Đăng nhập thành công
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/98632799-3dbd-4256-b19d-f1412f1ebea4" />
+Đăng nhập sai
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/85d42199-1eee-4361-aff6-0a6023d68d2f" />
+Xem Product (Chưa có dữ liệu trả về danh sách rỗng '[]')
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d7b8f885-6c09-4989-9a26-f5dda50410e6" />
+Thêm Product 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/11edcafb-ed5a-41f6-8a09-ef4ad5e6aec4" />
+Xem danh sách product sau khi thêm vài cái Product
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/806026ee-54a4-41fe-b31b-7aa07bc21f8f" />
+Đặt hàng Order
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/76c61097-9c66-449e-ac34-086833ef59bf" />
+Dữ liệu được ánh xạ ra ngoài mongoCompass
+Service Auth
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6c6830e1-9da9-429c-985f-3b2fb7896fb3" />
+Service Product
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/823c4e12-0b31-4a81-8eed-2c4c29015001" />
+Service Order
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cec57335-4f08-4dbe-aa1e-6f5eea9466a3" />
 
-<!-- Đăng nhập -->
-<img width="960" height="540" alt="Đăng nhập thành công" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/dangnhapthanhcong.png" />
-<img width="960" height="540" alt="Đăng nhập không thành công" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/dangnhapkhongthanhcong.png" />
 
-<!-- Thao tác với Product -->
-<img width="960" height="540" alt="Get Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/getproduct.png" />
-<img width="960" height="540" alt="Post Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/postproduct.png" />
-<img width="960" height="540" alt="Post Product Error" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/postproducterror.png" />
-<!-- Order -->
-<img width="960" height="540" alt="Get Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/order.png" />
-<!-- Kết quả từ Mongo -->
-<img width="960" height="540" alt="Kiểm tra Mongo khi post thành công" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/taikhoantrongmongo.png" />
-<img width="960" height="540" alt="Kiểm tra Mongo Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/mongoproduct.png" />
-<img width="960" height="540" alt="Kiểm tra Mongo Product" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/mongoorder.png" />
-<!-- Docker kiểm tra -->
-<img width="960" height="540" alt="Docker check" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/checkdocker.png" />
-<img width="960" height="540" alt="Docker thư mục" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/docker00.png" />
-<img width="960" height="540" alt="Docker container" src="https://github.com/VoVanTuTai/22655911-VoVanTuTai_EProject/blob/main/Images_report/docker01.png" />
+
+
+
+
+
+
+
