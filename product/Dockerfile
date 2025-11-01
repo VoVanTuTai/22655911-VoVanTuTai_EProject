@@ -15,6 +15,5 @@ COPY . .
 
 # Mở cổng mà ứng dụng sử dụng
 EXPOSE 3001
-
 # Lệnh để khởi chạy ứng dụng
 CMD ["node", "index.js"]

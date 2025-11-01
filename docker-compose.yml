@@ -7,12 +7,16 @@ services:
     container_name: api-gateway
     ports:
       - "3003:3003"
+    env_file:
+      - .env
     environment:
       - PORT=3003
+      - JWT_SECRET=${JWT_SECRET}
     depends_on:
       - auth
       - product
       - order
+    restart: always
     networks:
       - microservice-net
 
@@ -22,10 +26,20 @@ services:
     container_name: auth
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     environment:
-      - MONGO_URI=mongodb://auth-db:27017/auth_db
+      - MONGO_URI=${MONGO_URI_AUTH}
+      - JWT_SECRET=${JWT_SECRET}
     depends_on:
-      - auth-db
+      auth-db:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - microservice-net
 
@@ -35,12 +49,22 @@ services:
     container_name: product
     ports:
       - "3001:3001"
+    env_file:
+      - .env
     environment:
-      - MONGO_URI=mongodb://product-db:27017/product_db
-      - RABBITMQ_URI=amqp://rabbitmq:5672
+      - MONGO_URI=${MONGO_URI_PRODUCT}
+      - RABBITMQ_URI=${RABBITMQ_URI}
     depends_on:
-      - product-db
-      - rabbitmq
+      product-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - microservice-net
 
@@ -50,12 +74,23 @@ services:
     container_name: order
     ports:
       - "3002:3002"
+    env_file:
+      - .env
     environment:
-      - MONGO_URI=mongodb://order-db:27017/order_db
-      - RABBITMQ_URI=amqp://rabbitmq:5672
+      - MONGO_URI=${MONGO_URI_ORDER}
+      - RABBITMQ_URI=${RABBITMQ_URI}
+      - JWT_SECRET=${JWT_SECRET}
     depends_on:
-      - order-db
-      - rabbitmq
+      order-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - microservice-net
 
@@ -66,11 +101,14 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "check_port_listener"]
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 5s
-      timeout: 2s
-      retries: 20
+      timeout: 5s
+      retries: 15
     restart: always
     networks:
       - microservice-net
@@ -85,6 +123,11 @@ services:
       - auth-db-data:/data/db
     command: ["mongod", "--bind_ip_all"]
     restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - microservice-net
 
@@ -97,6 +140,11 @@ services:
       - product-db-data:/data/db
     command: ["mongod", "--bind_ip_all"]
     restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - microservice-net
 
@@ -109,6 +157,11 @@ services:
       - order-db-data:/data/db
     command: ["mongod", "--bind_ip_all"]
     restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - microservice-net
 
