@@ -106,7 +106,6 @@ class ProductController {
     }
   }
 
-
 //chỗ thêm endpoint
 
 async gid(req, res) {
@@ -119,9 +118,6 @@ async gid(req, res) {
     res.status(500).json({ message: "Server error" });
   }
 }
-
-
-
 
 }
 
