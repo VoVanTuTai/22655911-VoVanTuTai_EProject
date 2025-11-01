@@ -106,16 +106,22 @@ class ProductController {
     }
   }
 
-  async gid(req, res) {
-    try {
-      const products = await Product.findById(req.params.id);
 
-      res.status(200).json(products);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Server error" });
-    }
+//chỗ thêm endpoint
+
+
+async gid(req, res) {
+  try {
+    const products = await Product.findById({});
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
+}
+
+
 
 
 
