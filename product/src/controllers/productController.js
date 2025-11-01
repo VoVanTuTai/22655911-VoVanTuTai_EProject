@@ -109,10 +109,9 @@ class ProductController {
 
 //chỗ thêm endpoint
 
-
 async gid(req, res) {
   try {
-    const products = await Product.findById({});
+    const products = await Product.findById(req.params.id);
 
     res.status(200).json(products);
   } catch (error) {
@@ -120,7 +119,6 @@ async gid(req, res) {
     res.status(500).json({ message: "Server error" });
   }
 }
-
 
 
 
