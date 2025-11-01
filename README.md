@@ -1,3 +1,4 @@
+Hệ thống mô phỏng quy trình đặt hàng E-commerce bằng kiến trúc Microservices (gồm Auth, Product, Order) với API Gateway làm cổng định tuyến, sử dụng RabbitMQ để giao tiếp bất đồng bộ (Publisher-Subscriber) giữa Product và Order Service, đồng thời mỗi dịch vụ duy trì Database riêng biệt.
 Data in MongoCompass
 Hiển thị bằng cách ánh xạ cổng từ docker ra ngoài
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4910f24a-830b-4f60-b032-466dad471bb7" />
